@@ -1,0 +1,9 @@
+FROM adoptopenjdk:8-jdk-hotspot
+
+RUN apt update 
+RUN apt install unzip
+RUN mkdir /opt/app 
+COPY logging-job-0.1.zip /opt/app 
+RUN unzip /opt/app/logging-job-0.1.zip -d /opt/app/ 
+
+CMD ["/opt/app/logging-job-0.1/bin/logging-job"]
