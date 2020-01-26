@@ -1,0 +1,169 @@
+{
+  "took" : 5,
+  "timed_out" : false,
+  "_shards" : {
+    "total" : 1,
+    "successful" : 1,
+    "skipped" : 0,
+    "failed" : 0
+  },
+  "hits" : {
+    "total" : {
+      "value" : 781,
+      "relation" : "eq"
+    },
+    "max_score" : 7.824519,
+    "hits" : [
+      {
+        "_index" : "shakespeare",
+        "_type" : "_doc",
+        "_id" : "35469",
+        "_score" : 7.824519,
+        "_source" : {
+          "type" : "line",
+          "line_id" : 35470,
+          "play_name" : "Hamlet",
+          "speech_number" : 23,
+          "line_number" : "4.5.75",
+          "speaker" : "OPHELIA",
+          "text_entry" : "good night, good night."
+        }
+      },
+      {
+        "_index" : "shakespeare",
+        "_type" : "_doc",
+        "_id" : "6828",
+        "_score" : 7.4391246,
+        "_source" : {
+          "type" : "line",
+          "line_id" : 6829,
+          "play_name" : "Henry VI Part 2",
+          "speech_number" : 6,
+          "line_number" : "1.4.17",
+          "speaker" : "BOLINGBROKE",
+          "text_entry" : "Deep night, dark night, the silent of the night,"
+        }
+      },
+      {
+        "_index" : "shakespeare",
+        "_type" : "_doc",
+        "_id" : "21160",
+        "_score" : 7.193889,
+        "_source" : {
+          "type" : "line",
+          "line_id" : 21161,
+          "play_name" : "Antony and Cleopatra",
+          "speech_number" : 7,
+          "line_number" : "4.3.8",
+          "speaker" : "Third Soldier",
+          "text_entry" : "And you. Good night, good night."
+        }
+      },
+      {
+        "_index" : "shakespeare",
+        "_type" : "_doc",
+        "_id" : "14498",
+        "_score" : 7.0646043,
+        "_source" : {
+          "type" : "line",
+          "line_id" : 14499,
+          "play_name" : "Alls well that ends well",
+          "speech_number" : 32,
+          "line_number" : "3.6.100",
+          "speaker" : "First Lord",
+          "text_entry" : "very night."
+        }
+      },
+      {
+        "_index" : "shakespeare",
+        "_type" : "_doc",
+        "_id" : "19557",
+        "_score" : 7.0646043,
+        "_source" : {
+          "type" : "line",
+          "line_id" : 19558,
+          "play_name" : "Antony and Cleopatra",
+          "speech_number" : 4,
+          "line_number" : "2.3.11",
+          "speaker" : "OCTAVIUS CAESAR",
+          "text_entry" : "Good night."
+        }
+      },
+      {
+        "_index" : "shakespeare",
+        "_type" : "_doc",
+        "_id" : "60702",
+        "_score" : 7.0646043,
+        "_source" : {
+          "type" : "line",
+          "line_id" : 60703,
+          "play_name" : "Measure for measure",
+          "speech_number" : 8,
+          "line_number" : "4.4.19",
+          "speaker" : "ANGELO",
+          "text_entry" : "Good night."
+        }
+      },
+      {
+        "_index" : "shakespeare",
+        "_type" : "_doc",
+        "_id" : "73150",
+        "_score" : 7.0646043,
+        "_source" : {
+          "type" : "line",
+          "line_id" : 73151,
+          "play_name" : "Othello",
+          "speech_number" : 3,
+          "line_number" : "2.3.13",
+          "speaker" : "OTHELLO",
+          "text_entry" : "Good night."
+        }
+      },
+      {
+        "_index" : "shakespeare",
+        "_type" : "_doc",
+        "_id" : "87391",
+        "_score" : 7.0646043,
+        "_source" : {
+          "type" : "line",
+          "line_id" : 87392,
+          "play_name" : "Romeo and Juliet",
+          "speech_number" : 8,
+          "line_number" : "3.4.37",
+          "speaker" : "CAPULET",
+          "text_entry" : "Good night."
+        }
+      },
+      {
+        "_index" : "shakespeare",
+        "_type" : "_doc",
+        "_id" : "87863",
+        "_score" : 7.0646043,
+        "_source" : {
+          "type" : "line",
+          "line_id" : 87864,
+          "play_name" : "Romeo and Juliet",
+          "speech_number" : 4,
+          "line_number" : "4.3.13",
+          "speaker" : "LADY CAPULET",
+          "text_entry" : "Good night:"
+        }
+      },
+      {
+        "_index" : "shakespeare",
+        "_type" : "_doc",
+        "_id" : "102221",
+        "_score" : 7.0646043,
+        "_source" : {
+          "type" : "line",
+          "line_id" : 102222,
+          "play_name" : "Troilus and Cressida",
+          "speech_number" : 33,
+          "line_number" : "5.1.84",
+          "speaker" : "AGAMEMNON",
+          "text_entry" : "Good night."
+        }
+      }
+    ]
+  }
+}
