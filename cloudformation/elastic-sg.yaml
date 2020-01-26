@@ -1,0 +1,14 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Description: SecurityGroups for ElasticSearch
+  
+Resources:  
+  data:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: elasticsearch data segment
+      VpcId: vpc-0a2d4a4721edb4a4a
+      SecurityGroupIngress:
+        - IpProtocol: tcp
+          FromPort: 22
+          ToPort: 22
+          CidrIp: 0.0.0.0/0

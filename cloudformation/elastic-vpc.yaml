@@ -1,0 +1,107 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Description: ElasticSearch VPC
+
+Resources:
+  elasticVPC:
+    Type: AWS::EC2::VPC
+    Properties:
+      CidrBlock: 10.0.0.0/16
+      EnableDnsHostnames: true
+      EnableDnsSupport: true
+      Tags:
+        - Key: Name
+          Value: ElasticVPC
+
+  elasticIGW:
+    Type: AWS::EC2::InternetGateway
+    Properties:
+      Tags:
+      - Key: "Name"
+        Value: elastic-igw
+
+  elasticIgwAttach:
+    Type: AWS::EC2::VPCGatewayAttachment
+    Properties:
+      InternetGatewayId: !Ref elasticIGW
+      VpcId: 
+        Ref: elasticVPC 
+
+  elasticRT:
+    Type: AWS::EC2::RouteTable
+    Properties:
+      VpcId: 
+        Ref: elasticVPC
+
+  elasticRoute1:
+    Type: AWS::EC2::Route
+    Properties:
+      RouteTableId:
+        Ref: elasticRT 
+      DestinationCidrBlock: 0.0.0.0/0
+      GatewayId: 
+        Ref:  elasticIGW 
+
+  elasticSubnet01:
+    Type: AWS::EC2::Subnet
+    Properties:
+      AvailabilityZone: us-east-2a
+      CidrBlock: 10.0.1.0/24
+      MapPublicIpOnLaunch: true 
+      VpcId: 
+        Ref: elasticVPC
+      Tags:
+        - Key: Name 
+          Value: elasticvpc-subnet-01
+
+  elasticSubnet02:
+    Type: AWS::EC2::Subnet
+    Properties:
+      AvailabilityZone: us-east-2a
+      CidrBlock: 10.0.2.0/24
+      MapPublicIpOnLaunch: true 
+      VpcId: 
+        Ref: elasticVPC
+      Tags:
+        - Key: Name 
+          Value: elasticvpc-subnet-02
+
+  sub01RtAssoc:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties: 
+      RouteTableId: 
+        Ref: elasticRT
+      SubnetId: 
+        Ref: elasticSubnet01
+
+  elasticDataSG:
+    Type: AWS::EC2::SecurityGroup
+    Properties: 
+      GroupDescription: elasticsearch data securitygroup
+      GroupName: elasticDataSG
+      SecurityGroupIngress: 
+        - IpProtocol: tcp
+          FromPort: 22
+          ToPort: 22
+          CidrIp: 0.0.0.0/0
+      VpcId: 
+        Ref: elasticVPC
+
+        
+Outputs:
+  StackVPC:
+    Description: The id of this VPC 
+    Value: !Ref elasticVPC
+    Export:
+      Name: !Sub "${AWS::StackName}-VPCID"
+
+  StackSubnet:
+    Description: subnetId of data subnet 
+    Value: !Ref elasticSubnet01
+    Export:
+      Name: !Sub "${AWS::StackName}-subnet-data"
+
+  StackSG:
+    Description: security group for elastic public subnet
+    Value: !Ref elasticDataSG
+    Export:
+      Name: !Sub "${AWS::StackName}-sg-data"

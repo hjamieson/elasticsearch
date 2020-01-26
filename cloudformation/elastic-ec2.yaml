@@ -1,0 +1,38 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Description: ElasticSearch Hosts Stack
+
+Resources:
+  el7n1:
+    Type: AWS::EC2::Instance
+    Properties:
+      ImageId: ami-02ccb28830b645a41
+      InstanceType: t3.large
+      KeyName: elastic
+      SecurityGroupIds:
+        - Fn::ImportValue: elastic-vpc-sg-data
+      SubnetId: 
+        Fn::ImportValue: elastic-vpc-subnet-data
+      Tags:
+      - Key: Name
+        Value: el7n1
+      UserData:
+        Fn::Base64:
+          !Sub |
+            #!/bin/bash -xe
+            yum update -y 
+            rpm --import https://artifacts.elastic.co/GPG-KEY-elasticsearch
+            cat <<HEREFILE > /etc/yum.repos.d/elasticsearch.repo
+            [elasticsearch]
+            name=Elasticsearch repository for 7.x packages
+            baseurl=https://artifacts.elastic.co/packages/7.x/yum
+            gpgcheck=1
+            gpgkey=https://artifacts.elastic.co/GPG-KEY-elasticsearch
+            enabled=0
+            autorefresh=1
+            type=rpm-md
+            HEREFILE
+            echo "installing elasticsearch"
+            yum --enablerepo=elasticsearch install -y elasticsearch
+            systemctl daemon-reload
+            systemctl enable elasticsearch.service
+            systemctl start elasticsearch.service
