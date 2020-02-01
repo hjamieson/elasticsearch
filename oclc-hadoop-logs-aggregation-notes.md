@@ -50,3 +50,24 @@ January 25, 2020 | Hugh Jamieson
     wget http://media.sundog-soft.com/es7/shakespeare_7.0.json
 
     curl -H "Content-Type: application/json" -XPOST localhost:9200/shakespeare/_bulk --data-binary @shakespeare_7.0.json
+1. Install Kibana on the ES host:
+   ```
+   sudo yum --enablerepo=elasticsearch install kibana -y
+   sudo /bin/systemctl daemon-reload
+   sudo /bin/systemctl enable kibana.service
+   ```
+1. Don't forget to open port 5601 for kibana UI!
+2. Kibana default only listens on localhost; need to update config to bind to all nics.
+   ```
+   sudo vi /etc/kibana/kibana.yml
+   change server.host: "localhost"
+   to server.host: "0.0.0.0"
+
+   you should be able to use sed to do this:
+   sed -i.bak -e 's/server.host: "localhost"/server.host: "0.0.0.0"/' /etc/kibana/kibana.yml
+   ```
+1. Start kibana:
+   ```
+   sudo systemctl start kibana.service
+   # sudo systemctl stop kibana.service
+   ```

@@ -35,4 +35,18 @@ Resources:
             yum --enablerepo=elasticsearch install -y elasticsearch
             systemctl daemon-reload
             systemctl enable elasticsearch.service
+            cat <<ESEDITSEND > /etc/elasticsearch/es-edits.sed
+            s/#cluster.name: my-application/cluster.name: eshadoop/
+            s/#node.name: node-1/node.name: es7n1/
+            s/#network.host: 192.168.0.1/network.host: 0.0.0.0/
+            s/#discovery.seed_hosts: \["host1", "host2"\]/discovery.seed_hosts: ["es7n1"]/
+            s/#cluster.initial_master_nodes: \["node-1", "node-2"\]/cluster.initial_master_nodes: ["es7n1"]/
+            ESEDITSEND
+            sed -i.bak -E -f /etc/elasticsearch/es-edits.sed /etc/elasticsearch/elasticsearch.yml
             systemctl start elasticsearch.service
+            echo "installing kibana"
+            yum --enablerepo=elasticsearch install kibana -y
+            sed -i.bak -e 's/server.host: "localhost"/server.host: "0.0.0.0"/' /etc/kibana/kibana.yml
+            sudo /bin/systemctl daemon-reload
+            sudo /bin/systemctl enable kibana.service
+            sudo systemctl start kibana.service
