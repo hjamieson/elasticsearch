@@ -64,10 +64,60 @@ January 25, 2020 | Hugh Jamieson
    to server.host: "0.0.0.0"
 
    you should be able to use sed to do this:
-   sed -i.bak -e 's/server.host: "localhost"/server.host: "0.0.0.0"/' /etc/kibana/kibana.yml
+   sed -i.orig 's/#server.host: "0.0.0.0"/server.host: "0.0.0.0"/' /etc/kibana/kibana.yml
    ```
 1. Start kibana:
    ```
    sudo systemctl start kibana.service
    # sudo systemctl stop kibana.service
    ```
+
+## Beats Installation
+1. create a host
+2. install public signing key
+   ```
+   sudo rpm --import https://packages.elastic.co/GPG-KEY-elasticsearch
+   ```
+3. create /etc/yum.repos.d/elastic.repo
+   ```
+   [elastic-7.x]
+   name=Elastic repository for 7.x packages
+   baseurl=https://artifacts.elastic.co/packages/7.x/yum
+   gpgcheck=1
+   gpgkey=https://artifacts.elastic.co/GPG-KEY-elasticsearch
+   enabled=1
+   autorefresh=1
+   type=rpm-md
+   ```
+4. install beats
+   ```
+   sudo yum install filebeat -y
+   ```
+1. configure beats:
+   create /etc/filebeat/filebeat.yml
+1. create /data/logs folders
+3. when ready to run:
+   ```
+   sudo systemctl daemon-reload
+   sudo systemctl enable filebeat
+   sudo systemctl start filebeat
+   ```
+## Additional Fields Extraction
+Using the script processor
+hbas logs have time as _2019-09-29 10:01:42,403_
+javascript to extract time:
+```
+hugh.match(/\d{4}-\d{2}-\d{2}\s\d{2}:\d{2}:\d{2}\,\d+/)
+```
+beats sends a timestamp as follows:
+```
+"fields": {
+    "@timestamp": [
+      "2020-02-02T17:11:26.622Z"
+    ]
+  },
+ ```
+
+## Todays Hosts
+es: 3.133.141.39
+beats: 52.14.173.132

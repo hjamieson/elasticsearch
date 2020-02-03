@@ -1,0 +1,31 @@
+filebeat.inputs:
+- type: log
+  paths:
+    - /data/logs/hbase/*.log
+  tags: ["hbase","master"]
+  index: "hadoop-%{+yyyy.MM.dd}"
+
+- type: log
+  paths:
+    - /data/logs/syslog/*.log
+  tags: ["syslog"]
+  index: "hadoop-%{+yyyy.MM.dd}"
+
+output.elasticsearch:
+  hosts: ["http://3.133.141.39:9200"]
+
+processors:
+- script:
+    lang: javascript
+    id: msg_time_field
+    source: >
+      function process(event) {
+        var msg = event.Get("message");
+        var dateString = msg.match(/\d{4}-\d{2}-\d{2}\s\d{2}:\d{2}:\d{2}\,\d+/)
+        if (dateString != null){
+          var tstr = dateString[0].replace(" ","T").replace(",",".") + "Z";
+          event.Put("rawMsgTime", tstr);
+          var date = new Date(tstr);
+          event.Put("msgTime", date.toISOString());
+        }
+      }

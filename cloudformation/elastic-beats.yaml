@@ -1,0 +1,40 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Description: ElasticSearch Beats Host Stack
+
+Resources:
+  beatsn1:
+    Type: AWS::EC2::Instance
+    Properties:
+      ImageId: ami-02ccb28830b645a41
+      InstanceType: t3.micro
+      KeyName: elastic
+      SecurityGroupIds:
+        - Fn::ImportValue: elastic-vpc-sg-data
+      SubnetId: 
+        Fn::ImportValue: elastic-vpc-subnet-data
+      Tags:
+      - Key: Name
+        Value: beatsn1
+      UserData:
+        Fn::Base64:
+          !Sub |
+            #!/bin/bash -xe
+            yum update -y 
+            rpm --import https://packages.elastic.co/GPG-KEY-elasticsearch
+            cat <<HEREFILE > /etc/yum.repos.d/elasticsearch.repo
+            [elastic-7.x]
+            name=Elastic repository for 7.x packages
+            baseurl=https://artifacts.elastic.co/packages/7.x/yum
+            gpgcheck=1
+            gpgkey=https://artifacts.elastic.co/GPG-KEY-elasticsearch
+            enabled=1
+            autorefresh=1
+            type=rpm-md
+            HEREFILE
+            echo "installing beats"
+            yum install filebeat -y
+            echo "backing up filebeat.yml"
+            mv /etc/filebeat/filebeat.yml /etc/filebeat/filebeat.yml.orig
+            cat <<FILEBEATYML > /etc/filebeat/filebeat.yaml
+            ## *** filebeat.yml config goes here ***
+            FILEBEATYML

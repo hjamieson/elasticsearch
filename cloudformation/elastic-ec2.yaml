@@ -46,7 +46,7 @@ Resources:
             systemctl start elasticsearch.service
             echo "installing kibana"
             yum --enablerepo=elasticsearch install kibana -y
-            sed -i.bak -e 's/server.host: "localhost"/server.host: "0.0.0.0"/' /etc/kibana/kibana.yml
+            sed -i.bak 's/#server.host: "localhost"/server.host: "0.0.0.0"/' /etc/kibana/kibana.yml
             sudo /bin/systemctl daemon-reload
             sudo /bin/systemctl enable kibana.service
             sudo systemctl start kibana.service
