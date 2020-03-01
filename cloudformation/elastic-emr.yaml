@@ -1,0 +1,38 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Description: ElasticSearch EMR Host Stack
+
+# Security and access
+# Key name:elastic
+# EC2 instance profile:EMR_EC2_DefaultRole
+# EMR role:EMR_DefaultRole
+# Auto Scaling role:EMR_AutoScaling_DefaultRole
+# Visible to all users:
+# AllChange
+# Security groups for Master:sg-075519ce5385300a4 (ElasticMapReduce-master)
+# Security groups for Core & Task:sg-01a3b51965e5744c7 (ElasticMapReduce-slave)
+
+Resources:
+  hadoop1:
+    Type: AWS::EMR::Cluster
+    Properties:
+      Instances:
+        MasterInstanceGroup:
+          InstanceCount: 1
+          InstanceType: m5.xlarge
+          Name: master 
+        CoreInstanceGroup:
+          InstanceCount: 2
+          InstanceType: m5.xlarge 
+          Name: core 
+        TerminationProtected: false
+        Ec2SubnetId: 
+          Fn::ImportValue: elastic-vpc-subnet-data
+        Ec2KeyName: elastic
+      Name: EMRLab
+      VisibleToAllUsers: true
+      AutoScalingRole: EMR_AutoScaling_DefaultRole
+      JobFlowRole: EMR_EC2_DefaultRole
+      ServiceRole: EMR_DefaultRole
+      ReleaseLabel: emr-5.29.0
+      Applications:
+        - Name: Spark
