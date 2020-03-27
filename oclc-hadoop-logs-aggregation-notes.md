@@ -121,3 +121,31 @@ beats sends a timestamp as follows:
 ## Todays Hosts
 es: 3.133.141.39
 beats: 52.14.173.132
+
+## Installing adoptopenjdk
+1. create repo file for adopt:
+```
+sudo su -
+cat <<'EOF' > /etc/yum.repos.d/adoptopenjdk.repo
+[AdoptOpenJDK]
+name=AdoptOpenJDK
+baseurl=http://adoptopenjdk.jfrog.io/adoptopenjdk/rpm/centos/7/x86_64
+enabled=1
+gpgcheck=1
+gpgkey=https://adoptopenjdk.jfrog.io/adoptopenjdk/api/gpg/key/public
+EOF
+exit
+
+```
+1. install the JDK:
+```
+yum install adoptopenjdk-8-hotspot -y
+```
+
+## Installing SBT/Scala
+```
+wget https://piccolo.link/sbt-1.3.8.tgz
+sudo tar zxvf sbt-1.3.8.tgz -C /opt
+export PATH=/opt/sbt/bin:$PATH
+```
+
