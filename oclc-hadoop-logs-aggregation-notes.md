@@ -73,6 +73,19 @@ January 25, 2020 | Hugh Jamieson
    ```
 
 ## Beats Installation
+> tar install of filebeats is available here: 
+> https://artifacts.elastic.co/downloads/beats/filebeat/filebeat-7.6.1-linux-x86_64.tar.gz
+
+For further steps visit the
+[Getting started](https://www.elastic.co/guide/en/beats/filebeat/7.6/filebeat-getting-started.html) guide.
+
+## Documentation
+
+Visit [Elastic.co Docs](https://www.elastic.co/guide/en/beats/filebeat/7.6/index.html)
+for the full Filebeat documentation.
+
+### RPM Install
+
 1. create a host
 2. install public signing key
    ```
