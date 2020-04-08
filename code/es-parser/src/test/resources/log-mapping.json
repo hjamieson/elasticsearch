@@ -1,31 +1,31 @@
 {
-  "mappings": {
-    "properties": {
-      "timeStamp": {
-        "type": "text"
-      },
-      "level": {
-        "type": "keyword"
-      },
-      "message": {
-        "type": "text"
-      },
-      "hostname": {
-        "type": "keyword"
-      },
-      "role": {
-        "type": "keyword"
-      },
-      "offset": {
-        "type": "long"
-      },
-      "epochMillis":{
-        "type": "date",
-        "format": "epoch_millis"
-      },
-      "epoch": {
-        "type" : "epoch_second"
+    "mappings": {
+      "properties": {
+        "timeStamp": {
+          "type": "text"
+        },
+        "level": {
+          "type": "keyword"
+        },
+        "message": {
+          "type": "text"
+        },
+        "hostname": {
+          "type": "keyword"
+        },
+        "role": {
+          "type": "keyword"
+        },
+        "offset": {
+          "type": "long"
+        },
+        "epochMillis":{
+          "type": "date",
+          "format": "epoch_millis"
+        },
+        "epoch": {
+          "type" : "long"
+        }
       }
     }
   }
-}

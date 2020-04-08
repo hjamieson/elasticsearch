@@ -17,6 +17,7 @@ ext {
     scalaShortVersion = "2.11"
     junitVersion = "4.12"
     jacksonVersion = "2.6.5"
+    scallopsVersion = "3.4.0"
 }
 
 version = "0.1"
@@ -31,7 +32,7 @@ dependencies {
     // Use Scala 2.12 in our library project
     implementation "org.scala-lang:scala-library:${scalaVersion}"
     implementation "com.fasterxml.jackson.module:jackson-module-scala_${scalaShortVersion}:${jacksonVersion}"
-
+    implementation "org.rogach:scallop_${scalaShortVersion}:${scallopsVersion}"
 
     // Use Scalatest for testing our library
     testImplementation "junit:junit:${junitVersion}"
@@ -48,6 +49,9 @@ task fatJar(type: Jar) {
         configurations.default.collect { it.isDirectory() ? it : zipTree(it) }
     }
     with jar
+    manifest {
+        attributes 'Main-Class' : 'org.oclc.hadoop.elastic.utils.job.BulkGenerator'
+    }
 }
 
 application {
