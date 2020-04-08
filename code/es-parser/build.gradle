@@ -43,6 +43,7 @@ dependencies {
 }
 
 task fatJar(type: Jar) {
+    doFirst{println "building fat jar"}
     baseName = project.name
     classifier = "fat"
     from {
@@ -66,5 +67,10 @@ test {
         events "passed", "skipped", "failed"
 //        showStandardStreams = true
     }
+}
 
+jar {
+    finalizedBy{
+        fatJar
+    }
 }

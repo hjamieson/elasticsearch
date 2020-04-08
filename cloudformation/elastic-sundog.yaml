@@ -41,8 +41,11 @@ Resources:
             s/#network.host: 192.168.0.1/network.host: 0.0.0.0/
             s/#discovery.seed_hosts: \["host1", "host2"\]/discovery.seed_hosts: ["sundog"]/
             s/#cluster.initial_master_nodes: \["node-1", "node-2"\]/cluster.initial_master_nodes: ["sundog"]/
+            s/#http.port: 9200/http.max_content_length: 200mb/
             ESEDITSEND
             sed -i.bak -E -f /etc/elasticsearch/es-edits.sed /etc/elasticsearch/elasticsearch.yml
+            sed -i 's/-Xms1g/-Xms6g/' /etc/elasticsearch/jvm.options
+            sed -i 's/-Xmx1g/-Xmx6g/' /etc/elasticsearch/jvm.options
             systemctl start elasticsearch.service
             echo "installing kibana"
             yum --enablerepo=elasticsearch install kibana -y

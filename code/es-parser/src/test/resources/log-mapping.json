@@ -19,12 +19,9 @@
         "offset": {
           "type": "long"
         },
-        "epochMillis":{
+        "logtime":{
           "type": "date",
           "format": "epoch_millis"
-        },
-        "epoch": {
-          "type" : "long"
         }
       }
     }

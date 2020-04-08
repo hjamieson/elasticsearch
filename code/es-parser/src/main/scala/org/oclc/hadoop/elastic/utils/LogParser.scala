@@ -14,8 +14,7 @@ trait LogParser {
  * time sample: 2020-03-12 00:00:15,375
  */
 case class LogEntry(timeStamp: String, level: String, message: String, hostname: String, role: String, offset: Long = 0) {
-  lazy val epoch: Long = DateHelper.toEpochSecond(timeStamp)
-  lazy val epochMillis: Long = DateHelper.toEpochMillis(timeStamp)
+  lazy val logtime: Long = DateHelper.toEpochMillis(timeStamp)
 }
 
 
