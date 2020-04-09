@@ -2,6 +2,13 @@
 Setting up ELK for Hadoop log aggregation & analysis.
 January 25, 2020 | Hugh Jamieson
 
+## General log Notes
+most Hadoop logs are using the appender format = `%d{ISO8601} %p %c{2}: %m%n`, which:
+timestamp | level | class | message
+---|---|---|---
+2020-04-07 01:58:39,556 | INFO |  org.apache.hadoop.hdfs | log message
+
+
 ## Setup VPC
 [aws doc](https://docs.aws.amazon.com/vpc/latest/userguide/VPC_Internet_Gateway.html#d0e22943)
 1. run elastic-vpc.yaml cloudformation script to setup VPC, subnets, etc.
