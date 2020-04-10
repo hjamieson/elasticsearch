@@ -169,3 +169,14 @@ sudo tar zxvf sbt-1.3.8.tgz -C /opt
 export PATH=/opt/sbt/bin:$PATH
 ```
 
+## filebeats on OSX
+### Edit filebeat.yml
+```
+output.elasticsearch:
+  hosts: ["3.22.40.103:9200"]
+
+setup.kibana:
+  host: "3.22.40.103:5601"
+```
+
+### running filebeat
