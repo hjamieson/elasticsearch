@@ -180,3 +180,31 @@ setup.kibana:
 ```
 
 ### running filebeat
+
+
+## Simple Index
+host: 18.189.180.63
+
+### Mapping
+
+```json
+{
+    "mappings": {
+      "properties": {
+        "timeStamp": {
+          "type": "text"
+        },
+        "level": {
+          "type": "keyword"
+        },
+        "message": {
+          "type": "text"
+        },
+        "logtime":{
+          "type": "date",
+          "format": "epoch_millis"
+        }
+      }
+    }
+  }
+  ```

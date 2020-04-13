@@ -1,0 +1,32 @@
+---
+filebeat.inputs:
+- type: log
+  paths:
+    - /Users/jamiesoh/Downloads/mstr-*.log
+    - '/Users/jamiesoh/Downloads/nn-*.log'
+    - '/Users/jamiesoh/Downloads/dn-*.log'
+  tags: ["dev"]
+  processors:  
+    - dissect:
+        tokenizer: "/Users/jamiesoh/Downloads/%{role}-%{machine}.log"
+        field: log.file.path
+        target_prefix: "data"
+    - dissect:
+        tokenizer: "%{+wall-time} %{+wall-time} %{level} %{class} %{msg}"
+        field: message
+        target_prefix: ""
+    - timestamp:
+        field: wall_time
+        layouts: 
+          - '2006-01-02 15:04:05,999'
+    
+output.elasticsearch:
+  hosts: ["${ES_HOST}:9200"]
+   
+setup.kibana:
+host: "${ES_HOST}:5601"
+ 
+setup.template.overwrite: true
+setup.template.enabled: true
+setup.ilm.overwrite: true
+    
