@@ -1,0 +1,45 @@
+---
+filebeat.inputs:
+- type: log
+  paths:
+    - /Users/jamiesoh/Downloads/mstr-*.log
+    - '/Users/jamiesoh/Downloads/nn-*.log'
+    - '/Users/jamiesoh/Downloads/dn-*.log'
+  tags: ["dev"]
+  processors:  
+    - dissect:
+        tokenizer: "/Users/jamiesoh/Downloads/%{role}-%{machine}.log"
+        field: log.file.path
+        target_prefix: "oclc"
+    - dissect:
+        tokenizer: "%{+wall-frag} %{+wall-frag} %{level} %{class} %{msg}"
+        field: message
+        target_prefix: "oclc"
+    - script:
+        lang: javascript
+        id: make_ts
+        source: >
+          function process(event) {
+              var wall = event.Get("oclc.wall-frag")
+              wall = wall.replace(",",".")
+              wall = wall.replace(" ","T")
+              event.Put("oclc.walltime",wall)
+          }
+    - timestamp:
+        field: oclc.walltime
+        target_field: "@timestamp"
+        layouts: 
+          - '2006-01-02T15:04:05.999'
+        timezone: "America/New_York"
+    
+output.elasticsearch:
+  hosts: ["${ES_HOST}:9200"]
+   
+setup.kibana:
+host: "${ES_HOST}:5601"
+ 
+setup.template.overwrite: true
+setup.template.enabled: true
+setup.ilm.overwrite: true
+setup.template.name: "oclc"
+setup.template.fields: fields-oclc.yml
