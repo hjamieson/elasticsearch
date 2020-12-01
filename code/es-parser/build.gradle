@@ -16,7 +16,7 @@ ext {
     scalaVersion = "2.11.12"
     scalaShortVersion = "2.11"
     junitVersion = "4.12"
-    jacksonVersion = "2.6.5"
+    jacksonVersion = "2.8.8"
     scallopsVersion = "3.4.0"
 }
 
@@ -30,6 +30,7 @@ dependencies {
     // Use Scala 2.12 in our library project
     implementation "org.scala-lang:scala-library:${scalaVersion}"
     implementation "com.fasterxml.jackson.module:jackson-module-scala_${scalaShortVersion}:${jacksonVersion}"
+    implementation "com.fasterxml.jackson.dataformat:jackson-dataformat-csv:2.8.8"
     implementation "org.rogach:scallop_${scalaShortVersion}:${scallopsVersion}"
 
     // Use Scalatest for testing our library
