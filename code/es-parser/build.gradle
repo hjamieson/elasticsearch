@@ -30,7 +30,7 @@ dependencies {
     // Use Scala 2.12 in our library project
     implementation "org.scala-lang:scala-library:${scalaVersion}"
     implementation "com.fasterxml.jackson.module:jackson-module-scala_${scalaShortVersion}:${jacksonVersion}"
-    implementation "com.fasterxml.jackson.dataformat:jackson-dataformat-csv:2.8.8"
+    implementation "com.fasterxml.jackson.dataformat:jackson-dataformat-csv:${jacksonVersion}"
     implementation "org.rogach:scallop_${scalaShortVersion}:${scallopsVersion}"
 
     // Use Scalatest for testing our library
@@ -50,13 +50,14 @@ task fatJar(type: Jar) {
     }
     with jar
     manifest {
-        attributes 'Main-Class' : 'org.oclc.hadoop.elastic.utils.job.BulkGenerator'
+        attributes 'Main-Class' : 'org.oclc.hadoop.elastic.utils.job.CsvToEsBulk'
     }
 }
 
 application {
     mainClassName = 'org.oclc.hadoop.elastic.utils.job.BulkGenerator'
 }
+
 run {
     standardInput = System.in
 }
