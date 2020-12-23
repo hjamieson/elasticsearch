@@ -1,0 +1,17 @@
+PUT /_index_template/hbase-template
+{
+   "index_patterns":"hbase*",
+   "template": {
+       "settings": {
+           "number_of_shards": 1
+       },
+       "mappings": {
+           "properties": {
+               "eventTimeMs": {
+                   "type": "date",
+                   "format":"epoch_millis"
+               }
+           }
+       }
+   }
+}
